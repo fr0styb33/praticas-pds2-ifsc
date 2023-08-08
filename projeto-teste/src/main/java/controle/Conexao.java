@@ -20,7 +20,7 @@ public class Conexao {
 			return instancia;	
 		}
 		
-		public static Connection conectar() {
+		public Connection conectar() {
 			try {
 				conexao = DriverManager.getConnection("jdbc:mysql://localhost/"+ DATABASE + "?serverTimezone=UTC", USER, PSW);
 			} catch (Exception e) { 
