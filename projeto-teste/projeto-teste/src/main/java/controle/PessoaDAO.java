@@ -14,7 +14,7 @@ public class PessoaDAO {
 		Conexao c = Conexao.getInstacia();
 		Connection con = c.conectar();
 
-		ArrayList<Pessoa> pessoinha = new ArrayList();
+		ArrayList<Pessoa> pessoinhas = new ArrayList();
 
 		String query = "SELECT * FROM pessoa";
 
@@ -30,15 +30,36 @@ public class PessoaDAO {
 				p.setIdPessoa(idPessoa);
 				p.setPrimeiroNome(primeiroNome);
 
-				pessoinha.add(p);
+				pessoinhas.add(p);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		c.fecharConexao();
+		return pessoinhas;
 	}
 
 	public boolean inserir(Pessoa p) {
 
-		return true;
+		Conexao c = Conexao.getInstacia();
+		Connection con = c.conectar();
+
+		String query = "INSERT INTO pessoa " + "(id_pessoa, primeiro_nome) " + "VALUES (?, ?)";
+
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+
+			ps.setInt(1, p.getIdPessoa());
+			ps.setString(2, p.getPrimeiroNome());
+
+			ps.executeUpdate();
+
+			c.fecharConexao();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
